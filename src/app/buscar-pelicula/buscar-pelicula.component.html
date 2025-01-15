@@ -1,0 +1,60 @@
+<app-barra></app-barra>
+
+<div class="w-full mx-auto mt-4 px-4 sm:w-[38%]">
+  <form class="bg-white shadow-md rounded px-4 pt-6 pb-8" #form="ngForm">
+    <div class="mb-4">
+        Buscar película
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="idPelicula">
+        Ingrese Id de la película
+      </label>
+      <input 
+        id="idPelicula" 
+        name="idPelicula" 
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  
+        type="number"  
+        required 
+        [(ngModel)]="idPelicula" min="1">
+    </div>
+    <div class="flex items-center justify-center">
+      <button 
+        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600  sm:hover:bg-red-800 sm:focus:ring-red-700" 
+        type="button" 
+        (click)="buscarPelicula()">
+        Buscar
+      </button>
+    </div>
+  </form>
+</div>
+
+<div  *ngIf="data && data.length > 0" class="overflow-x-auto shadow-md sm:rounded-lg mt-8 bg-white">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-200 text-gray-600">
+        <tr>
+          <th class="px-4 py-2 text-left">ID</th>
+          <th class="px-4 py-2 text-left">Nombre</th>
+          <th class="px-4 py-2 text-left">Descripción</th>
+          <th class="px-4 py-2 text-left">Duración</th>
+          <th class="px-4 py-2 text-left">Puntuación</th>
+          <th class="px-4 py-2 text-left">Imagen</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-800">
+        <tr *ngFor="let pelicula of data">
+          <td class="px-4 py-2">{{ pelicula.id }}</td>
+          <td class="px-4 py-2">{{ pelicula.nombre }}</td>
+          <td class="px-4 py-2">{{ pelicula.descripcion }}</td>
+          <td class="px-4 py-2">{{ pelicula.duracion }} min</td>
+          <td class="px-4 py-2">{{ pelicula.puntuacion }}</td>
+          <td class="px-4 py-2">
+            <img [src]="pelicula.imagen" alt="{{ pelicula.nombre }}" class="w-24 h-24 object-cover">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-red-500 mt-4 text-center">
+    {{ errorMessage }}
+  </div>
+  
+  

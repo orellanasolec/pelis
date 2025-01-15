@@ -1,0 +1,122 @@
+<app-barra></app-barra>
+
+<div class="py-4 px-4">
+  <form 
+    class="mx-auto w-full max-w-lg bg-white p-6 shadow-md rounded-lg"
+    #formulario="ngForm" 
+    (ngSubmit)="formulario.valid && agregarPelicula()">
+    Ingresar película
+
+    <!-- Nombre -->
+    <div class="mb-4">
+      <input
+        type="text"
+        name="nombre"
+        [(ngModel)]="nombre"
+        required
+        placeholder="Nombre película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+      />
+      <div *ngIf="formulario.submitted && !formulario.controls['nombre']?.valid" class="text-red-500 text-sm">
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="mb-4">
+      <input
+        type="text"
+        name="descripcion"
+        [(ngModel)]="descripcion"
+        required
+        placeholder="Descripción película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+      />
+      <div *ngIf="formulario.submitted && !formulario.controls['descripcion']?.valid" class="text-red-500 text-sm">
+        La descripción es obligatoria.
+      </div>
+    </div>
+
+    <!-- Duración -->
+    <div class="mb-4">
+      <input
+        type="text"
+        name="duracion"
+        [(ngModel)]="duracion"
+        required
+        placeholder="Duración película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        (input)="soloNumeros($event)"
+      />
+      <div *ngIf="formulario.submitted && !formulario.controls['duracion']?.valid" class="text-red-500 text-sm">
+        La duración es obligatoria.
+      </div>
+    
+    </div>
+
+    <!-- Imagen -->
+    <div class="mb-4">
+      <input
+        type="text"
+        name="imagen"
+        [(ngModel)]="imagen"
+        required
+        placeholder="Imagen película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+      />
+      <div *ngIf="formulario.submitted && !formulario.controls['imagen']?.valid" class="text-red-500 text-sm">
+        La URL de la imagen es obligatoria.
+      </div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="mb-4">
+      <label for="idCategoria" class="block text-gray-700">Categoría</label>
+      <select 
+        name="idCategoria" 
+        [(ngModel)]="idCategoria" 
+        required 
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md">
+        <option *ngFor="let categoria of categorias" [value]="categoria.value">
+          {{ categoria.label }}
+        </option>
+      </select>
+      <div *ngIf="formulario.submitted && !formulario.controls['idCategoria']?.valid" class="text-red-500 text-sm">
+        La categoría es obligatoria.
+      </div>
+    </div>
+    <div class="flex items-center justify-center">
+        <button
+        type="submit"
+        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600  sm:hover:bg-red-800 sm:focus:ring-red-700">
+        Enviar
+        </button>
+    </div>    
+  </form>
+
+  <!-- Tabla de películas -->
+  <div class="mt-6">
+    <table class="table-auto w-full border-collapse">
+      <thead>
+        <tr>
+          <th class="border-b p-2 text-left">Nombre</th>
+          <th class="border-b p-2 text-left">Descripción</th>
+          <th class="border-b p-2 text-left">Duración</th>
+          <th class="border-b p-2 text-left">Imagen</th>
+          <th class="border-b p-2 text-left">Categoría</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pelicula of peliculas">
+            <td class="border-b p-2">{{ pelicula.nombre }}</td>
+            <td class="border-b p-2">{{ pelicula.descripcion }}</td>
+            <td class="border-b p-2">{{ pelicula.duracion }}</td>
+            <td class="border-b p-2">
+              <img [src]="pelicula.imagen" alt="{{ pelicula.nombre }}" class="w-16 h-16 object-cover" />
+            </td>
+            <td class="border-b p-2">{{ pelicula.categoria.nombre }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

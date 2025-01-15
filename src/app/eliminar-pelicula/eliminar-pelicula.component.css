@@ -1,0 +1,10 @@
+/* Elimina las flechas en los inputs de tipo number */
+input[type="number"].remove-spinner::-webkit-outer-spin-button,
+input[type="number"].remove-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].remove-spinner {
+  -moz-appearance: textfield;
+}

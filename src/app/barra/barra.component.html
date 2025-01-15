@@ -1,0 +1,15 @@
+
+<div class="bg-[#23619f] flex justify-between items-center mx-auto p-6 text-white text-center h-20"  >
+    <h1 class="text-base font-semibold underline  text-wrap hidden md:block" >
+      Sesión expira en: {{ timerValue }}
+      
+    </h1>
+  
+    <div class="flex gap-1 md:gap-2 text-white">
+      <a class="p-1 font-semibold text-sm" [routerLink]="'/ingresarPelicula'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Ingresar película</a>
+      <a class="p-1 font-semibold text-sm" [routerLink]="'/buscarPelicula'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Buscar película</a>
+      <a class="p-1 font-semibold text-sm" [routerLink]="'/eliminarPelicula'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Eliminar película</a>
+
+    </div>
+  </div>
+  

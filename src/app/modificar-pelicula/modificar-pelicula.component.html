@@ -1,0 +1,87 @@
+<app-barra></app-barra>
+<div class="py-4 px-4">
+  <form 
+    class="mx-auto w-full max-w-lg bg-white p-6 shadow-md rounded-lg"
+    #formulario="ngForm" 
+    (ngSubmit)="formulario.valid && modificarPelicula()">
+    Modificar película
+    
+    <div class="mb-4">
+        <input
+          type="text"
+          name="id"
+          [(ngModel)]="id"
+          required
+          placeholder="id película"
+          class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+          (input)="soloNumeros($event)"
+          [disabled]="true"
+        />
+        <div *ngIf="formulario.submitted && !formulario.controls['id']?.valid" class="text-red-500 text-sm">
+          El id es obligatorio.
+        </div>
+      </div>
+      
+
+    <div class="mb-4">
+      <input
+        type="text"
+        name="nombre"
+        [(ngModel)]="nombre"
+        placeholder="Nombre película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+      />
+    </div>
+    
+    <div class="mb-4">
+      <input
+        type="text"
+        name="descripcion"
+        [(ngModel)]="descripcion"
+        placeholder="Descripción película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+      />
+    </div>
+
+    <div class="mb-4">
+      <input
+        type="number"
+        name="duracion"
+        [(ngModel)]="duracion"
+        placeholder="Duración película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        (input)="soloNumeros($event)"
+        
+      />
+    </div>
+
+    <div class="mb-4">
+      <input
+        type="text"
+        name="imagen"
+        [(ngModel)]="imagen"
+        placeholder="Imagen película"
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="idCategoria" class="block text-gray-700">Categoría</label>
+      <select 
+        name="idCategoria" 
+        [(ngModel)]="idCategoria" 
+        class="w-full mt-2 p-2 border border-gray-300 rounded-md">
+        <option *ngFor="let categoria of categorias" [value]="categoria.value">
+          {{ categoria.label }}
+        </option>
+      </select>
+    </div>
+    <div class="flex items-center justify-center">
+      <button
+        type="submit"
+        class="mx-auto my-auto text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600  sm:hover:bg-red-800 sm:focus:ring-red-700">
+        Enviar
+      </button>
+    </div>
+  </form>
+</div>
