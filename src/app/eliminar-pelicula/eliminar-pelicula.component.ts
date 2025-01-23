@@ -40,6 +40,7 @@ export class EliminarPeliculaComponent {
           next: (response) => {
             console.log('Película eliminada con éxito:', response);
             this.errorMessage = ""; // Limpiar cualquier error previo
+            this.llenarData();
           },
           error: (error) => {
             console.error('Error al eliminar la película:', error);

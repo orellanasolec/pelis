@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Ruta para el enlace
   {path: 'crud',component:CrudComponent, canActivate: [AuthGuard]},
   {path: 'ingresarPelicula',component:IngresarPeliculaComponent, canActivate: [AuthGuard]},
-  {path: 'eliminarPelicula',component:EliminarPeliculaComponent, canActivate: [AuthGuard]},
+  {path: 'listarPeliculas',component:EliminarPeliculaComponent, canActivate: [AuthGuard]},
   {path: 'buscarPelicula',component:BuscarPeliculaComponent, canActivate: [AuthGuard]},
   {path: 'modificarPelicula/:id',component:ModificarPeliculaComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '', pathMatch: 'full' },

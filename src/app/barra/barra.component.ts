@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TimerService } from '../timer.service';
 import { Subscription } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-barra',
@@ -14,7 +15,7 @@ export class BarraComponent implements OnInit, OnDestroy {
   timerValue: string = ''; // Para mostrar el valor del temporizador
   private timerSubscription: Subscription | null = null;
 
-  constructor(private timerService: TimerService) {}
+  constructor(private timerService: TimerService,private authService:AuthService,private router:Router) {}
 
   ngOnInit() {
     this.timerValue="";
@@ -28,4 +29,12 @@ export class BarraComponent implements OnInit, OnDestroy {
       this.timerSubscription.unsubscribe(); // Limpia la suscripción al destruir el componente
     }
   }
+
+  cerrarSesion(){
+    alert("Adiós")
+    this.authService.logout();
+    this.router.navigate(['/home']);
+
+  }
 }
+

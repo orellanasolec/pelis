@@ -1,8 +1,9 @@
 
 export enum Categoria {
-    Accion = 1,
-    Comedia,
-    Drama,
-    Terror,
-    CienciaFiccion,
+    Aventura=1,
+    Accion=2 ,
+    Comedia=3,
+    Drama=4,
+    Terror=5,
+    CienciaFiccion=6,
   }

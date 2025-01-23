@@ -4,11 +4,14 @@
       Sesión expira en: {{ timerValue }}
       
     </h1>
-  
+    <button class="bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" 
+     (click)="cerrarSesion()">
+      Cerrar sesión
+    </button>
     <div class="flex gap-1 md:gap-2 text-white">
       <a class="p-1 font-semibold text-sm" [routerLink]="'/ingresarPelicula'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Ingresar película</a>
       <a class="p-1 font-semibold text-sm" [routerLink]="'/buscarPelicula'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Buscar película</a>
-      <a class="p-1 font-semibold text-sm" [routerLink]="'/eliminarPelicula'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Eliminar película</a>
+      <a class="p-1 font-semibold text-sm" [routerLink]="'/listarPeliculas'"  routerLinkActive="text-yellow-400 border-b-2 border-yellow-400">Listar películas</a>
 
     </div>
   </div>

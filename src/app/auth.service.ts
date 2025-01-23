@@ -1,18 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/internal/Observable";
+
 
 @Injectable({
     providedIn: 'root',
   })
   export class AuthService {
-    private apiUrl = 'https://tudominio/api/login'; // Cambia esto por tu URL de API
+ 
   
     constructor(private http: HttpClient) {}
-  
-    login(usuario: string, password: string): Observable<any> {
-      return this.http.post(this.apiUrl, { usuario, password });
-    }
   
     setToken(token: string): void {
       if (typeof window !== 'undefined') {  // Verifica si estamos en el navegador

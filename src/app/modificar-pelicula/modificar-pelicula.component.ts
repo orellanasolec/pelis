@@ -6,6 +6,7 @@ import { Categoria } from '../../categoria.enum';
 import { ApiService } from '../service/api.service';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { idService } from '../id.service';
 
 @Component({
   selector: 'app-modificar-pelicula',
@@ -25,7 +26,7 @@ export class ModificarPeliculaComponent implements OnInit{
    idCategoria:number=0;
    nuevoid:string=""
 
-  constructor(private apiService: ApiService,private authService:AuthService,private router:Router, private route: ActivatedRoute ){}
+  constructor(private apiService: ApiService,private authService:AuthService,private router:Router, private route: ActivatedRoute,private idservice:idService ){}
 
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class ModificarPeliculaComponent implements OnInit{
 
                
         });
-        // Aquí puedes ver los campos devueltos por la API
+       
       },
       (error) => {
         console.error('Error al obtener los datos de la película:', error); // Manejamos errores aquí
@@ -77,8 +78,17 @@ export class ModificarPeliculaComponent implements OnInit{
       return;
      }
      
-    alert("pelicula :"+this.nombre)
+    alert("pelicula modificada :"+this.nombre)
     this.apiService.modificarPelicula(this.nuevoid,this.nombre,this.descripcion,this.duracion,this.imagen,this.puntuacion,this.idCategoria)
+    this.id=0;
+    this.nombre="";
+    this.descripcion="";
+    this.duracion="";
+    this.idCategoria=0;
+    this.imagen="";
+    this.idservice.setId(this.nuevoid);
+    this.router.navigate(['/buscarPelicula']);
+
   }
 
   soloNumeros(event: any) {

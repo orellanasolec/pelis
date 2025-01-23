@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private url='http://localhost:3000/pelicula';
+  private url='http://13.60.221.32:3000/pelicula';
 
   constructor(private http: HttpClient) {
     }
@@ -17,7 +17,7 @@ export class ApiService {
       return this.http.get<any>(this.url)
     }
 
-    private urlLogin = 'http://localhost:3000/login';
+    private urlLogin = 'http://13.60.221.32:3000/login';
 
     darLike(peliculaId: number): Observable<any> {
       const url = `${this.url}/${peliculaId}/like`;
@@ -38,13 +38,14 @@ export class ApiService {
       }
 
   
-      agregarPelicula(nombre: string, descripcion: string, duracion: string, imagen: string, categoria: number): Observable<any> {
-        const body = { nombre, descripcion, duracion, imagen, categoria };
+      agregarPelicula(nombre: string, descripcion: string, duracion: number, imagen: string, categoriaId: number): Observable<any> {
+        const body = { nombre, descripcion, duracion, imagen, categoriaId };
+      
         return this.http.post<any>(this.url, body); 
       }
 
       eliminarPelicula(id: number): Observable<any> {
-        console.log("me llegó este nombre del html " + id);
+
   
         return this.http.delete(`${this.url}/${id}`);
       }
@@ -52,7 +53,7 @@ export class ApiService {
 
     modificarPelicula(id: string, nombre: string, descripcion: string, duracion: string, imagen: string, puntuacion: number, idCategoria: number) {
       const body = { nombre, descripcion, duracion, imagen, idCategoria };
-      console.log("Entre al servicio y tengo este body:", body);
+    
       
       this.http.patch(`${this.url}/${id}`, body, {
         headers: { 'Content-Type': 'application/json' }

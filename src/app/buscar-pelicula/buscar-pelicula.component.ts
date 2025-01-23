@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ApiService } from '../service/api.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { idService } from '../id.service';
 
 @Component({
   selector: 'app-buscar-pelicula',
@@ -13,17 +14,28 @@ import { Router } from '@angular/router';
   templateUrl: './buscar-pelicula.component.html',
   styleUrl: './buscar-pelicula.component.css'
 })
-export class BuscarPeliculaComponent{
-
-  constructor(private apiService: ApiService, private authService:AuthService,private router: Router){}
-
-
+export class BuscarPeliculaComponent implements OnInit{
+  
   errorMessage: string="";
-
-
-
   idPelicula:number=0;
   data:any[]=[];
+  
+
+
+  constructor(private apiService: ApiService, private authService:AuthService,private router: Router,private route: ActivatedRoute,private idservice:idService){
+    this.route.paramMap.subscribe(params => {
+      const idString = params.get('id');  // Obtiene el parámetro 'id' como string o null
+  
+      if (idString !== null) {
+        this.idPelicula = parseInt(idString);
+      } else {
+        // Manejar el caso en el que el parámetro 'id' no está presente
+        this.idPelicula = 0; // O cualquier valor predeterminado que desees
+      }
+  
+    });
+  }
+
 
 
   
@@ -52,6 +64,11 @@ buscarPelicula(): void {
       console.error(this.errorMessage);
     }
   );
+}
+
+ngOnInit(): void {
+  this.idPelicula = this.idservice.getId();
+  this.buscarPelicula();
 }
 
 }

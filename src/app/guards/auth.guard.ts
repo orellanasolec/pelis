@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['/home']);
       return false;
     }else{
-      console.log("segun esto el token nunca expiró")
+     
     }
     return true;
   }

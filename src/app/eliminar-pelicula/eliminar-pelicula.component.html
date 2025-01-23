@@ -1,6 +1,10 @@
 <app-barra></app-barra>
-<div class="container mx-auto p-4">
 
+<!----------------------------->
+
+<div class="container mx-auto p-4">
+ 
+  <!-- Título -->
   <h1 class="mb-4 text-3xl font-extrabold text-blue-500 dark:text-yellow-300 md:text-5xl lg:text-6xl text-center">
     <span class="bg-gradient-to-r from-[#ffffff] via-[#c8e3ff] to-[#add6ff] text-transparent bg-clip-text">
       Gestión de películas
@@ -12,33 +16,58 @@
     <table class="font-semibold w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-100 rounded border-[#3581cb]">
       <thead class="text-xs text-white uppercase bg-[#23619f] dark:text-white">
         <tr>
-          <th scope="col" class="px-6 py-3 align-top">ID</th>
-          <th scope="col" class="px-6 py-3 align-top">Nombre</th>
-          <th scope="col" class="px-6 py-3 align-top">Descripción</th>
-          <th scope="col" class="px-6 py-3 align-top">Duración (min)</th>
-          <th scope="col" class="px-6 py-3 text-center align-top">Imagen</th>
-          <th scope="col" class="px-6 py-3 align-top">Categoría</th>
+          <th scope="col" class="px-2 py-3 text-start sm:w-2/6  w-4/12 lg:w-1/4 md:text-center ">Película</th>
+          <th scope="col" class="px-2 py-3 text-start sm:w-4/6  w-8/12 lg:w-1/2 md:text-center bg-[#2d6eae]"  >Descripción</th>
+          <th scope="col" class="hidden lg:table-cell px-2 py-3  text-start lg:w-1/12 md:text-center">Categoría</th>
+          <th scope="col" class="hidden lg:table-cell px-2 py-3 text-start lg:w-1/12 md:text-center bg-[#2d6eae] ">Duración</th>
+          <th scope="col" class="hidden lg:table-cell px-2 py-3 text-start w-2/6 md:text-center ">Id</th>
+        
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let d of data" class="bg-[#e8e8e8] border-b border-[#65ccff] hover:bg-yellow-500 hover:text-white">
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100">{{ d.id }}</td>
-          <td class="px-6 py-4">{{ d.nombre }}</td>
-          <td class="px-6 py-4">{{ d.descripcion }}</td>
-          <td class="px-6 py-4">{{ d.duracion }}</td>
-          <td class="px-6 py-4">
+          <div class="text-blue-900 text-start px-2 md:text-center ">{{ d.nombre }}
+
+          <td class="flex flex-col">
+           <div class="w-full">
             <img
               [src]="d.imagen"
               alt="{{ d.nombre }}"
-              class="w-16 h-16 object-cover cursor-pointer">
-             
-
-            <img src="/basura.ico" alt="" height="20px" width="30px" class="mt-5 inline"  (click)="eliminarPelicula(d.id)">
-            <img src="/modificar.png" alt="" height="20px" width="30px" class="mt-5 inline" (click)="toModificar(d.id)" >
-          
-          
+              class="w-24 h-24 object-cover cursor-pointer block md:mx-auto md:justify-center "
+            >
+           </div>
+            <div class=" mt-2   md:mx-auto md:justify-center">
+              <img
+                src="/basura.ico"
+                alt="Eliminar película"
+                height="30px"
+                width="30px"
+                class="mr-2 cursor-pointer inline"
+                (click)="eliminarPelicula(d.id)"
+              >
+              <img
+                src="/modificar.png"
+                alt="Modificar película"
+                height="30px"
+                width="30px"
+                class="cursor-pointer inline"
+                (click)="toModificar(d.id)"
+              >
+            </div>
+         
           </td>
-          <td class="px-6 py-4">{{ d.categoria.nombre }}</td>
+          </div>
+         
+          <div class="pb-2">
+            <div class="text-start px-2 text-neutral-500 lg:hidden md:text-center">{{ d.categoria.nombre }}</div>
+            <div class="text-start px-2 text-neutral-500 lg:hidden md:text-center">{{ d.duracion }} min</div>
+            <div class="text-start px-2 text-neutral-500 lg:hidden md:text-center">Id: {{ d.id }}</div>
+          </div>
+          <td class="px-2 py-2 text-start align-top pt-7">{{ d.descripcion }}</td>
+          <td class="hidden px-2 py-2 text-start align-top pt-7 lg:table-cell md:text-center">{{ d.categoria.nombre }}</td>
+          <td class="hidden px-2 py-2 text-start align-top pt-7 lg:table-cell md:text-center">{{ d.duracion }} min</td>
+          <td class="hidden px-2 py-2 text-start align-top pt-7 lg:table-cell md:text-center" >{{ d.id}}</td>
+       
         </tr>
       </tbody>
     </table>

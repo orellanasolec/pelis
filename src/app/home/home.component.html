@@ -1,11 +1,11 @@
 <div class="container mx-auto p-4">
   <!-- Formulario - barra vertical en móviles, horizontal en pantallas más grandes -->
-  <div class="flex justify-center items-center mb-4">
+  <div class="flex justify-center items-center mb-1 ">
     <form class="w-full sm:max-w-lg space-y-4" (ngSubmit)="onSubmit()">
-      <div class="flex flex-col sm:flex-row sm:space-x-4 mb-5">
+      <div class="flex flex-col sm:flex-row sm:space-x-4 ">
         
         <!-- Campo Usuario -->
-        <div class="flex flex-col sm:w-1/2 mb-4 sm:mb-0">
+        <div class="flex flex-col sm:w-2/4 mb-4 sm:mb-0">
           <input 
             type="text" 
             id="usuario" 
@@ -18,7 +18,7 @@
         </div>
 
         <!-- Campo Contraseña -->
-        <div class="flex flex-col sm:w-1/2">
+        <div class="flex flex-col sm:w-2/4">
           <input 
             type="password" 
             id="password" 
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Botón Entrar - Centrado -->
-        <div class="flex justify-center sm:w-2/4 mt-4 sm:mt-0">
+        <div class="flex justify-center sm:w-1/4 mt-4 sm:mt-0">
           <button 
             type="submit" 
             class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600  sm:hover:bg-red-800 sm:focus:ring-red-700"
@@ -55,31 +55,38 @@
     <table class="font-semibold w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-100 rounded border-[#3581cb]">
       <thead class="text-xs text-white uppercase bg-[#23619f] dark:text-white">
         <tr>
-          <th scope="col" class="px-6 py-3 align-top">ID</th>
-          <th scope="col" class="px-6 py-3 align-top">Nombre</th>
-          <th scope="col" class="px-6 py-3 align-top">Descripción</th>
-          <th scope="col" class="px-6 py-3 align-top">Duración (min)</th>
-          <th scope="col" class="px-6 py-3 text-center align-top">Likes</th>
-          <th scope="col" class="px-6 py-3 align-top">Dar like ❤️</th>
-          <th scope="col" class="px-6 py-3 align-top">Categoría</th>
+          <th scope="col" class="px-2 py-3 text-start sm:w-2/6  bg-[#23619f] w-4/12 lg:w-1/4 md:text-center">Película</th>
+          <th scope="col" class="px-2 py-3 text-start sm:w-4/6  bg-[#2d6eae] w-8/12 lg:w-1/2 md:text-center"  >Descripción</th>
+          <th scope="col" class="hidden lg:table-cell px-2 py-3 bg-[#23619f] text-start lg:w-1/12">Categoría</th>
+          <th scope="col" class="hidden lg:table-cell px-2 py-3 bg-[#2d6eae] text-start lg:w-1/12">Duración</th>
+          <th scope="col" class="hidden lg:table-cell px-2 py-3 text-start w-2/6">Likes</th>
+        
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let d of data" class="bg-[#e8e8e8] border-b border-[#65ccff] hover:bg-yellow-500 hover:text-white">
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-100">{{ d.id }}</td>
-          <td class="px-6 py-4">{{ d.nombre }}</td>
-          <td class="px-6 py-4">{{ d.descripcion }}</td>
-          <td class="px-6 py-4">{{ d.duracion }}</td>
-          <td class="px-6 py-4 text-center">{{ d.puntuacion }}</td>
-          <td class="px-6 py-4">
+          <div class="text-blue-900 text-start px-2 md:text-center">{{ d.nombre }}</div>
+          <td class="px-2 py-4 flex md:justify-center relative ">
+           
             <img
               [src]="d.imagen"
               alt="{{ d.nombre }}"
-              class="w-16 h-16 object-cover cursor-pointer"
+              class="w-36 h-36 object-cover cursor-pointer justify-start"
               (click)="darLike(d.id)"
             />
+            <img src="corazon.png" alt="" class="absolute w-6 h-6  top-3 left-2 md:left-12 xl:left-20 pointer-events-none ">
+          
           </td>
-          <td class="px-6 py-4">{{ d.categoria.nombre }}</td>
+          <div class="pb-2">
+            <div class="text-start px-2 text-neutral-500 lg:hidden md:text-center">{{ d.categoria.nombre }}</div>
+            <div class="text-start px-2 text-neutral-500 lg:hidden md:text-center">{{ d.duracion }} min</div>
+            <div class="text-start px-2 text-neutral-500 lg:hidden md:text-center">{{ d.puntuacion }} ❤️</div>
+          </div>
+          <td class="px-2 py-2 text-start align-top pt-7">{{ d.descripcion }}</td>
+          <td class="hidden px-2 py-2 text-start align-top pt-7 lg:table-cell">{{ d.categoria.nombre }}</td>
+          <td class="hidden px-2 py-2 text-start align-top pt-7 lg:table-cell">{{ d.duracion }} min</td>
+          <td class="hidden px-2 py-2 text-start align-top pt-7 lg:table-cell">{{ d.puntuacion}}</td>
+       
         </tr>
       </tbody>
     </table>
@@ -90,3 +97,4 @@
 <div *ngIf="errorMessage" class="text-red-500 mt-4">
   {{ errorMessage }}
 </div>
+

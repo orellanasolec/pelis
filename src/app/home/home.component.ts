@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit{
           localStorage.setItem('token', token);
           this.timerService.initializeTimerFromToken();
 
-          this.router.navigate(['/eliminarPelicula']);
+          this.router.navigate(['/listarPeliculas']);
        
           
         },
@@ -90,5 +90,16 @@ export class HomeComponent implements OnInit{
       alert('Por favor, complete todos los campos.');
     }
 
-    
-}}
+   
+}
+ 
+validarToken(){
+  if(localStorage.getItem("token")){
+    return false;
+  }else{
+      return true;
+    }
+  }
+}
+
+

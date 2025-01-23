@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Categoria } from '../../categoria.enum';
 import { ApiService } from '../service/api.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { idService } from '../id.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ingresar-pelicula',
@@ -14,12 +16,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class IngresarPeliculaComponent {
 
-constructor(private apiService: ApiService,){}
+constructor(private apiService: ApiService,private idservice:idService,private router:Router){}
 
   
     nombre:string='';
     descripcion:string='';
-    duracion:string="";
+    duracion:number | null = null;
     imagen:string='';
     idCategoria:number=1;
     peliculas:any=[];
@@ -27,6 +29,7 @@ constructor(private apiService: ApiService,){}
   
 
   categorias = [
+    { value: Categoria.Aventura,label: 'Aventura'},
     { value: Categoria.Accion, label: 'Acción' },
     { value: Categoria.Comedia, label: 'Comedia' },
     { value: Categoria.Drama, label: 'Drama' },
@@ -35,18 +38,22 @@ constructor(private apiService: ApiService,){}
   ];
 
   agregarPelicula() {
-    const duracionParse= parseInt(this.duracion,10)
-    if (duracionParse <= 30) {
-      alert('La duración debe ser mayor a 30 minutos.');
-      return;
+    const duracionValida = Number(this.duracion);
+    if (isNaN(duracionValida) || duracionValida <= 30) {
+        alert('La duración debe ser un número mayor a 30 minutos.');
+        return;
     }
-    this.apiService.agregarPelicula(this.nombre, this.descripcion, this.duracion, this.imagen, this.idCategoria)
+    this.apiService.agregarPelicula(this.nombre, this.descripcion, duracionValida, this.imagen, this.idCategoria)
       .subscribe({
         next: (response) => {
           console.log('Película agregada:', response);
           alert('Película agregada correctamente. Nombre: '+response.nombre+" id: "+response.id);
           this.peliculas.push(response); 
           this.limpiarFormulario()
+          this.idservice.setId(response.id)
+          this.router.navigate(['/buscarPelicula']);
+
+
       
         },
         error: (error) => {
@@ -56,15 +63,21 @@ constructor(private apiService: ApiService,){}
       });
     }
 
+
   soloNumeros(event: any) {
-    const regex = /[^0-9]/g;  // Expresión regular que coincide con todo lo que no sea número
-    event.target.value = event.target.value.replace(regex, '');  // Reemplaza todo lo que no sea número con una cadena vacía
-  }
+    const regex = /^[0-9]*$/; // Asegurarse de que el valor solo contenga números
+    const input = event.target.value;
+
+    if (!regex.test(input)) {
+        event.target.value = input.replace(/[^0-9]/g, ''); // Elimina cualquier carácter no numérico
+    }
+}
+
 
   limpiarFormulario() {
     this.nombre = '';
     this.descripcion = '';
-    this.duracion = '';
+    this.duracion = null;
     this.imagen = '';
     this.idCategoria = 1;
    
