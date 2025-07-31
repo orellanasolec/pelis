@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'; // Asegúrate de importar HttpErrorResponse
 import { BarraComponent } from '../barra/barra.component';
 import { CommonModule } from '@angular/common';
 import { Categoria } from '../../categoria.enum';
@@ -43,6 +44,11 @@ constructor(private apiService: ApiService,private idservice:idService,private r
         alert('La duración debe ser un número mayor a 30 minutos.');
         return;
     }
+    if (this.nombre.length > 255 || this.descripcion.length > 255 || this.imagen.length > 255) {
+      alert('Los campos no deben exceder los 255 caracteres.');
+      return;
+    }
+
     this.apiService.agregarPelicula(this.nombre, this.descripcion, duracionValida, this.imagen, this.idCategoria)
       .subscribe({
         next: (response) => {
@@ -59,6 +65,46 @@ constructor(private apiService: ApiService,private idservice:idService,private r
         error: (error) => {
           console.error('Error al agregar la película:', error);
           alert('Error al agregar la película');
+           let errorMessage = 'Error desconocido al agregar la película.';
+
+      // Intenta obtener un mensaje de error más específico del backend
+      if (error.error instanceof ErrorEvent) {
+        // Error del lado del cliente o de la red
+        errorMessage = `Error del lado del cliente: ${error.error.message}`;
+      } else {
+        // El backend devolvió un código de respuesta no exitoso.
+        // El cuerpo de la respuesta puede contener más detalles.
+        console.error(
+          `Código de error del backend: ${error.status}, ` +
+          `cuerpo: ${error.error}`);
+
+        if (error.status === 404) {
+          errorMessage = 'Error 404: No se encontró la ruta para agregar la película en el servidor.';
+        } else if (error.status === 400) {
+          errorMessage = 'Error 400: Datos inválidos. Por favor, revisa la información ingresada.';
+          // Si tu backend envía un mensaje específico en el cuerpo del error 400
+          if (error.error && error.error.message) {
+            errorMessage += ` Detalle: ${error.error.message}`;
+          }
+        } else if (error.status === 500) {
+          errorMessage = 'Error 500: Error interno del servidor al procesar la solicitud.';
+          if (error.error && error.error.message) {
+            errorMessage += ` Detalle: ${error.error.message}`;
+          }
+        } else if (error.status === 0) {
+            errorMessage = 'Error de red o CORS. El servidor no respondió o la conexión fue rechazada.';
+        } else {
+          errorMessage = `Error ${error.status}: ${error.statusText || 'Error en el servidor.'}`;
+          if (error.error && typeof error.error === 'string') {
+              errorMessage += ` Mensaje: ${error.error}`;
+          } else if (error.error && error.error.message) {
+              errorMessage += ` Mensaje: ${error.error.message}`;
+          }
+        }
+      }
+
+      alert(errorMessage); // Muestra el mensaje de error más detallado al usuario
+
         }
       });
     }
@@ -82,5 +128,15 @@ constructor(private apiService: ApiService,private idservice:idService,private r
     this.idCategoria = 1;
    
   }
+
+  validarPegado(event: ClipboardEvent): void {
+    const contenidoPegado = event.clipboardData?.getData('text');
+    
+    // Si el contenido pegado no es un número válido, previene la acción
+    if (!contenidoPegado || !/^\d+$/.test(contenidoPegado)) {
+      event.preventDefault();
+    }
+  }
+  
 
 }

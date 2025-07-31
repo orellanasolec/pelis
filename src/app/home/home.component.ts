@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../service/api.service';
+
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { TimerService } from '../timer.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +19,11 @@ import { TimerService } from '../timer.service';
 })
 export class HomeComponent implements OnInit{
 
-  constructor(private apiService: ApiService, private router: Router,private timerService: TimerService ){}
+  constructor(private apiService: ApiService, private router: Router,private timerService: TimerService,private authService: AuthService){}
 
 
-  usuario: string = '';
-  password: string = '';
+  usuario: string = 'admin';
+  password: string = 'clave123';
 
 
   errorMessage: string = '';
@@ -74,6 +76,7 @@ export class HomeComponent implements OnInit{
           console.log("respuesta del servidor mía: "+response.token)
           const token=response.token
           localStorage.setItem('token', token);
+          this.authService.setToken(token); 
           this.timerService.initializeTimerFromToken();
 
           this.router.navigate(['/listarPeliculas']);

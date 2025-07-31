@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private url='http://13.60.221.32:3000/pelicula';
+  private url='https://backend-peliculas-5gdl.onrender.com/pelicula'; 
 
   constructor(private http: HttpClient) {
     }
@@ -17,7 +17,7 @@ export class ApiService {
       return this.http.get<any>(this.url)
     }
 
-    private urlLogin = 'http://13.60.221.32:3000/login';
+    private urlLogin = 'https://backend-peliculas-5gdl.onrender.com/login';
 
     darLike(peliculaId: number): Observable<any> {
       const url = `${this.url}/${peliculaId}/like`;

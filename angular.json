@@ -40,9 +40,10 @@
               "src/styles.css"
             ],
             "scripts": [],
+            "baseHref": "/peliculas/",
             "server": "src/main.server.ts",
             "prerender": false,
-            "ssr":false
+            "ssr": false
           },
           "configurations": {
             "production": {
@@ -78,7 +79,10 @@
               "buildTarget": "frontPelicula:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+           
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

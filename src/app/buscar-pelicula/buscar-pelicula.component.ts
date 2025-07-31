@@ -46,10 +46,7 @@ buscarPelicula(): void {
     this.router.navigate(['/home']);
   
    }
-  if (this.idPelicula<1) {
-    alert("Por favor ingresa un ID válido.");
-    return;
-  }
+ 
   this.data = [];
   this.errorMessage="";
   this.apiService.buscarPelicula(this.idPelicula).subscribe(
