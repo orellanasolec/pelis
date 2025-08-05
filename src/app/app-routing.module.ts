@@ -7,16 +7,16 @@ import { IngresarPeliculaComponent } from './ingresar-pelicula/ingresar-pelicula
 import { EliminarPeliculaComponent } from './eliminar-pelicula/eliminar-pelicula.component';
 import { BuscarPeliculaComponent } from './buscar-pelicula/buscar-pelicula.component';
 import { ModificarPeliculaComponent } from './modificar-pelicula/modificar-pelicula.component';
-import { AuthGuard } from './guards/auth.guard';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Ruta raíz
   { path: 'login', component: LoginComponent }, // Ruta para el enlace
-  {path: 'crud',component:CrudComponent, canActivate: [AuthGuard]},
-  {path: 'ingresarPelicula',component:IngresarPeliculaComponent, canActivate: [AuthGuard]},
-  {path: 'listarPeliculas',component:EliminarPeliculaComponent, canActivate: [AuthGuard]},
-  {path: 'buscarPelicula',component:BuscarPeliculaComponent, canActivate: [AuthGuard]},
-  {path: 'modificarPelicula/:id',component:ModificarPeliculaComponent, canActivate: [AuthGuard]},
+  {path: 'crud',component:CrudComponent,},
+  {path: 'ingresarPelicula',component:IngresarPeliculaComponent},
+  {path: 'listarPeliculas',component:EliminarPeliculaComponent},
+  {path: 'buscarPelicula',component:BuscarPeliculaComponent},
+  {path: 'modificarPelicula/:id',component:ModificarPeliculaComponent},
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

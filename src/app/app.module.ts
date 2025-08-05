@@ -30,7 +30,6 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     IngresarPeliculaComponent,
     BuscarPeliculaComponent,
-    ModificarPeliculaComponent,
     LoginComponent,
     HomeComponent,
     CrudComponent,

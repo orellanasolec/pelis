@@ -1,13 +1,13 @@
 <app-barra></app-barra>
-
-<div class="py-4 px-4">
+<div class="fixed inset-0 bg-black bg-opacity-70 z-40 justify-center items-center  p-4">
+<div class="py-4 px-4 mt-6">
   <form 
-    class="mx-auto w-full max-w-lg bg-white p-6 shadow-md rounded-lg"
+    class="mx-auto w-full max-w-lg bg-[#1E293B] p-6 shadow-md rounded-lg text-white"
     #formulario="ngForm" 
     (ngSubmit)="formulario.valid && agregarPelicula()">
     Ingresar película
 
-    <!-- Nombre -->
+
     <div class="mb-4">
       <input
         type="text"
@@ -15,14 +15,14 @@
         [(ngModel)]="nombre"
         required
         placeholder="Nombre película"
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        class="w-full mt-2 p-2   rounded-md bg-[#334155]"
       />
       <div *ngIf="formulario.submitted && !formulario.controls['nombre']?.valid" class="text-red-500 text-sm">
         El nombre es obligatorio.
       </div>
     </div>
 
-    <!-- Descripción -->
+    
     <div class="mb-4">
       <input
         type="text"
@@ -30,14 +30,14 @@
         [(ngModel)]="descripcion"
         required
         placeholder="Descripción película"
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        class="w-full mt-2 p-2  rounded-md bg-[#334155]"
       />
       <div *ngIf="formulario.submitted && !formulario.controls['descripcion']?.valid" class="text-red-500 text-sm">
         La descripción es obligatoria.
       </div>
     </div>
 
-    <!-- Duración -->
+  
     <div class="mb-4">
       <input
         type="number"
@@ -45,7 +45,7 @@
         [(ngModel)]="duracion"
         required
         placeholder="Duración película"
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        class="w-full mt-2 p-2  rounded-md bg-[#334155]"
         (input)="soloNumeros($event)"
        
       />
@@ -55,7 +55,6 @@
     
     </div>
 
-    <!-- Imagen -->
     <div class="mb-4">
       <input
         type="text"
@@ -63,21 +62,21 @@
         [(ngModel)]="imagen"
         required
         placeholder="Url imagen película"
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        class="w-full mt-2 p-2   rounded-md bg-[#334155]"
       />
       <div *ngIf="formulario.submitted && !formulario.controls['imagen']?.valid" class="text-red-500 text-sm">
         La URL de la imagen es obligatoria.
       </div>
     </div>
 
-    <!-- Categoría -->
+   
     <div class="mb-4">
-      <label for="idCategoria" class="block text-gray-700">Categoría</label>
+      <label for="idCategoria" class="block text-white">Categoría</label>
       <select 
         name="idCategoria" 
         [(ngModel)]="idCategoria" 
         required 
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md">
+        class="w-full mt-2 p-2  rounded-md bg-[#334155]">
         <option *ngFor="let categoria of categorias" [value]="categoria.value">
           {{ categoria.label }}
         </option>
@@ -88,11 +87,16 @@
     </div>
     <div class="flex items-center justify-center">
         <button
+        (click)="volver()"
+        class="mr-5 text-white bg-[#334155] hover:bg-cyan-800   font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+        Cancelar
+        </button>
+        <button
         type="submit"
-        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600  sm:hover:bg-red-800 sm:focus:ring-red-700">
+        class="text-white bg-cyan-500 hover:bg-cyan-800   font-medium rounded-lg text-sm px-5 py-2.5 text-center">
         Enviar
         </button>
     </div>    
   </form>
 
- 
+ </div>

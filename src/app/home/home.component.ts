@@ -1,108 +1,80 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../service/api.service';
-
-import { Observable } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import jwt_decode from 'jwt-decode';
-import { TimerService } from '../timer.service';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ CommonModule,RouterModule,FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
-  constructor(private apiService: ApiService, private router: Router,private timerService: TimerService,private authService: AuthService){}
+  showModal: boolean = false;
+  modalMessage: string = '';
+  
+  data: any[] = [];
+errorMessage: any;
 
-
-  usuario: string = 'admin';
-  password: string = 'clave123';
-
-
-  errorMessage: string = '';
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  
     this.llenarData();
-    this.sortMoviesByRating()
   }
 
-  data:any[]=[];
 
-  llenarData(){
-    this.apiService.getData().subscribe(data =>{
-      this.data=data;
-      this.sortMoviesByRating()
-      console.log('ID de la categoría:', data.nombre);
+  llenarData(): void {
+    this.apiService.getData().subscribe({
+      next: (data) => {
+        this.data = data;
+        this.sortMoviesByRating();
       
-    })
-  }
-
-  darLike(peliculaId: number): void {
-    
-    this.apiService.darLike(peliculaId).subscribe({
-      next: (response) => {
-        console.log('Like enviado:', response);
-        this.llenarData();
       },
       error: (error) => {
-        console.error('Error al dar like:', error);
-        this.errorMessage = 'Hubo un error al dar like.';
-      }
-
       
-     
+      
+        this.modalMessage = 'No se pudieron cargar las películas al iniciar.';
+        this.showModal = true;
+      }
     });
-   
-
-
-  }
-  sortMoviesByRating(): void {
-    this.data.sort((a, b) => b.puntuacion - a.puntuacion);  
   }
 
-  onSubmit() {
-    if (this.usuario && this.password) {
-      this.errorMessage = '';
-      this.apiService.login(this.usuario, this.password).subscribe({
-        next: (response) => {
-          console.log('Respuesta del servidor:', response);
-          console.log("respuesta del servidor mía: "+response.token)
-          const token=response.token
-          localStorage.setItem('token', token);
-          this.authService.setToken(token); 
-          this.timerService.initializeTimerFromToken();
-
-          this.router.navigate(['/listarPeliculas']);
+  
+  darLike(peliculaId: number): void {
+    this.apiService.darLike(peliculaId).subscribe({
+      next: (response) => {
+      
+        this.llenarData(); 
+      },
+      error: (error) => {
        
-          
-        },
-        error: (error) => {
-          alert("Datos incorrectos")
-          console.error('Error al enviar los datos:', error);
-          this.errorMessage = 'Ocurrió un error al intentar iniciar sesión.';
-        }
-      });
-    } else {
-      alert('Por favor, complete todos los campos.');
-    }
+        this.modalMessage = error.error?.message || 'Hubo un error al dar like.';
+        this.showModal = true;
+      }
+    });
+  }
 
-   
-}
  
-validarToken(){
-  if(localStorage.getItem("token")){
-    return false;
-  }else{
-      return true;
+  sortMoviesByRating(): void {
+    if (this.data) {
+      this.data.sort((a, b) => b.puntuacion - a.puntuacion);
     }
   }
+
+
+  entrar(): void {
+    this.router.navigate(['/listarPeliculas']);
+  }
+
+  
+  closeModal(): void {
+    this.showModal = false;
+  }
 }
-
-

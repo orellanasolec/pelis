@@ -19,6 +19,9 @@ export class ApiService {
 
     private urlLogin = 'https://backend-peliculas-5gdl.onrender.com/login';
 
+    buscarPeliculaPorNombre(nombre: string) {
+  return this.http.get<any[]>(`/api/peliculas?nombre=${encodeURIComponent(nombre)}`);
+}
     darLike(peliculaId: number): Observable<any> {
       const url = `${this.url}/${peliculaId}/like`;
       return this.http.post(url, { like: true });
@@ -51,20 +54,11 @@ export class ApiService {
       }
       
 
-    modificarPelicula(id: string, nombre: string, descripcion: string, duracion: string, imagen: string, puntuacion: number, idCategoria: number) {
-      const body = { nombre, descripcion, duracion, imagen, idCategoria };
-    
-      
-      this.http.patch(`${this.url}/${id}`, body, {
-        headers: { 'Content-Type': 'application/json' }
-      }).subscribe(
-        response => {
-          console.log("Respuesta del servidor:", response);
-        },
-        error => {
-          console.error("Error al enviar la solicitud:", error);
-        }
-      );
-    }
+modificarPelicula(id: string, datosPelicula: any): Observable<any> {
+ 
+  return this.http.patch(`${this.url}/${id}`, datosPelicula, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
     
 }

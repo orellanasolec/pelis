@@ -22,15 +22,15 @@ export class BuscarPeliculaComponent implements OnInit{
   
 
 
-  constructor(private apiService: ApiService, private authService:AuthService,private router: Router,private route: ActivatedRoute,private idservice:idService){
+  constructor(private apiService: ApiService, private router: Router,private route: ActivatedRoute,private idservice:idService){
     this.route.paramMap.subscribe(params => {
-      const idString = params.get('id');  // Obtiene el parámetro 'id' como string o null
+      const idString = params.get('id');  
   
       if (idString !== null) {
         this.idPelicula = parseInt(idString);
       } else {
-        // Manejar el caso en el que el parámetro 'id' no está presente
-        this.idPelicula = 0; // O cualquier valor predeterminado que desees
+       
+        this.idPelicula = 0;
       }
   
     });
@@ -39,33 +39,32 @@ export class BuscarPeliculaComponent implements OnInit{
 
 
   
-buscarPelicula(): void {
-  if(this.authService.isTokenExpired()){
-    alert("la sesión expiró")
-    this.authService.logout()
-    this.router.navigate(['/home']);
-  
-   }
- 
+buscarPelicula(id:number): void {
+
+   this.idPelicula=id;
   this.data = [];
   this.errorMessage="";
+  if(this.idPelicula!=0){
   this.apiService.buscarPelicula(this.idPelicula).subscribe(
 
     (data) => {
       this.data = [data];
-      console.log('Película encontrada:', this.data); // Ver en la consola
+    
     },
     (error) => {
-      // Imprime el mensaje de error proveniente del backend
+    
       this.errorMessage = error.error?.message;
-      console.error(this.errorMessage);
+    
     }
   );
-}
+}}
 
 ngOnInit(): void {
   this.idPelicula = this.idservice.getId();
-  this.buscarPelicula();
+  this.buscarPelicula(this.idPelicula);
 }
+
+
+
 
 }
