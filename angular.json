@@ -40,7 +40,7 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "baseHref": "/peliculas/",
+            "baseHref": "/pelis/",
             "server": "src/main.server.ts",
             "prerender": false,
             "ssr": false
